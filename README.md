@@ -2,7 +2,7 @@
 
 Web undangan digital self-service. Pembuat mengisi wizard, lalu membagikan link personal ke tiap tamu lewat WhatsApp. Demo v1 fokus ke undangan pernikahan bertema Modern; sweet seventeen menyusul.
 
-Kode aplikasi dibangun oleh AI coding agent, milestone demi milestone. Status terakhir: **M1 (token desain dan komponen dasar) selesai** — Cover, Pembuka, Mempelai, dan Acara sudah dirender statis di `/contoh`.
+Kode aplikasi dibangun oleh AI coding agent, milestone demi milestone. Status terakhir: **M2 (model data dan data demo) selesai** — empat tabel, bucket `media`, skema Zod, dan seed `raka-sekar` sudah jalan di Supabase lokal. Tampilan undangan tamu menyusul di M3.
 
 ## Isi repo
 
@@ -26,8 +26,12 @@ pnpm lint
 pnpm typecheck
 pnpm test           # Vitest
 pnpm test:e2e       # Playwright
-pnpm exec supabase start
+pnpm db:start       # Supabase lokal (Docker)
+pnpm db:reset       # migrasi + seed raka-sekar
 ```
+
+Token edit undangan demo `raka-sekar`: `demo-raka-sekar-edit-token-2027`
+(hanya hash-nya yang disimpan di database).
 
 ## Rute sementara
 

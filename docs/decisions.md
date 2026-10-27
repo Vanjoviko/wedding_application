@@ -4,6 +4,13 @@ Keputusan yang diambil di luar `docs/PRD.md` dicatat di sini, terbaru di atas. F
 
 | Tanggal | Keputusan | Alasan | Milestone |
 | --- | --- | --- | --- |
+| 2026-10-28 | `events.slug` nullable, unique index parsial `where slug is not null`, plus constraint `status = 'draft' or slug is not null` | Banyak draf bisa hidup tanpa slug; undangan terbit wajib punya slug | M2 |
+| 2026-10-28 | Kolom `type`, `theme`, `plan`, `status`, `kind`, `attendance` memakai `text` + `CHECK`, bukan tipe enum Postgres | Menambah nilai baru cukup ubah constraint, tidak perlu migrasi tipe | M2 |
+| 2026-10-28 | `updated_at` diurus trigger `public.touch_updated_at()` | Satu sumber kebenaran, tidak bergantung pada setiap kode tulis | M2 |
+| 2026-10-28 | Seed lokal memakai jalur `/demo/*.webp` di `media.storage_path` | Foto demo ada di `public/`, bukan Storage; M3 akan memakai jalur yang diawali `/` apa adanya, sisanya jadi URL publik Storage | M2 |
+| 2026-10-28 | `supabase/seed.sql` hanya untuk lokal; data produksi dimasukkan lewat skrip SQL terpisah saat M3 | `seed.sql` ikut `db reset` dan tidak dijalankan ke database hosted | M2 |
+| 2026-10-28 | Tipe `content` diturunkan dari skema Zod (`z.infer`), bukan ditulis ulang manual | Satu sumber kebenaran untuk validasi dan TypeScript | M2 |
+| 2026-10-28 | Indeks `responses (event_id, ip_hash, created_at desc)` dibuat sekarang | Dibutuhkan untuk rate limit RSVP di M4 | M2 |
 | 2026-10-27 | Vercel wajib punya environment variable `PNPM_CONFIG_NODE_LINKER=isolated` untuk Production dan Preview | `nodeLinker: hoisted` di `pnpm-workspace.yaml` ikut terbaca saat Vercel menyiapkan engine pnpm 12, sehingga `node_modules/pnpm` tidak ada dan build gagal dengan "pnpm wrapper is missing" | M0 |
 | 2026-10-27 | `nodeLinker: hoisted` tetap dipakai di repo hanya untuk mesin lokal | Proyek berada di mount Windows (drvfs) yang tidak andal untuk symlink; Vercel menimpanya dengan `isolated` | M0 |
 | 2026-10-27 | Nama brand sementara "Undangan Digital" sebagai fallback `NEXT_PUBLIC_BRAND_NAME`; repo GitHub dibiarkan public | Keputusan pemilik produk | M0 |
@@ -24,7 +31,6 @@ Keputusan yang diambil di luar `docs/PRD.md` dicatat di sini, terbaru di atas. F
 
 | Topik | Keputusan yang diusulkan | Milestone |
 | --- | --- | --- |
-| Kolom `slug` | `text NULL` + unique index parsial `WHERE slug IS NOT NULL`, supaya banyak draf bisa ada tanpa slug | M2 |
 | Proteksi token edit | `Referrer-Policy: no-referrer` dan noindex untuk `/edit/*`, tanpa embed pihak ketiga | M3 |
 | Batas pembuatan draf | Batas draf per IP per jam dan batas jumlah draf aktif per IP | M6 |
 | Siklus hidup draf | Draf tanpa aktivitas 30 hari dihapus beserta fotonya | M6 |
