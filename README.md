@@ -2,7 +2,7 @@
 
 Web undangan digital self-service. Pembuat mengisi wizard, lalu membagikan link personal ke tiap tamu lewat WhatsApp. Demo v1 fokus ke undangan pernikahan bertema Modern; sweet seventeen menyusul.
 
-Kode aplikasi dibangun oleh AI coding agent, milestone demi milestone. Status terakhir: **M0 (fondasi proyek) selesai** — landing sementara sudah bisa dijalankan.
+Kode aplikasi dibangun oleh AI coding agent, milestone demi milestone. Status terakhir: **M1 (token desain dan komponen dasar) selesai** — Cover, Pembuka, Mempelai, dan Acara sudah dirender statis di `/contoh`.
 
 ## Isi repo
 
@@ -28,6 +28,15 @@ pnpm test           # Vitest
 pnpm test:e2e       # Playwright
 pnpm exec supabase start
 ```
+
+## Rute sementara
+
+| Rute                        | Isi                                                            |
+| --------------------------- | -------------------------------------------------------------- |
+| `/`                         | Landing                                                        |
+| `/contoh`                   | Pratinjau statis Cover, Pembuka, Mempelai, Acara (noindex)     |
+| `/dev/ui`                   | Semua komponen dasar; hanya development dan preview deployment |
+| `/buat`, `/demo`, `/[slug]` | Menyusul di M6, M2, dan M3                                     |
 
 ## Cara mulai dengan agent
 

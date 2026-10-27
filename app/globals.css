@@ -1,6 +1,98 @@
 @import "tailwindcss";
 
-@theme inline {
+@theme {
+  /* Warna — docs/PRD.md § Spesifikasi desain */
+  --color-bg: #1c1916;
+  --color-surface: #26211d;
+  --color-line: #3a332d;
+  --color-ink: #f2ece2;
+  --color-ink-soft: #e9e1d4;
+  --color-muted: #b9afa2;
+  --color-accent: #c8a46a;
+  --color-accent-hover: #d9b77f;
+  --color-on-accent: #1c1916;
+
+  /* Tambahan di luar PRD, tercatat di docs/decisions.md */
+  --color-focus: #f2ece2;
+  --color-danger: #e7a99b;
+
+  /* Tipografi — Cormorant Garamond + Jost dimuat lewat next/font */
   --font-sans: var(--font-jost);
   --font-serif: var(--font-cormorant);
+
+  --text-cover: 56px;
+  --text-cover--line-height: 1;
+  --text-name: 46px;
+  --text-name--line-height: 1.1;
+  --text-title: 42px;
+  --text-title--line-height: 1.1;
+  --text-card: 30px;
+  --text-card--line-height: 1.1;
+  --text-count: 26px;
+  --text-count--line-height: 1;
+  --text-quote: 26px;
+  --text-quote--line-height: 1.35;
+  --text-guest: 24px;
+  --text-guest--line-height: 1.25;
+  --text-fullname: 21px;
+  --text-fullname--line-height: 1.3;
+  --text-body: 15px;
+  --text-body--line-height: 1.65;
+  --text-meta: 13px;
+  --text-meta--line-height: 1.5;
+  --text-note: 12px;
+  --text-note--line-height: 1.5;
+
+  /* Bentuk */
+  --radius-photo: 20px;
+  --radius-card: 18px;
+  --radius-count: 14px;
+}
+
+:root {
+  /* Nama token sesuai PRD, dipakai saat butuh var() langsung */
+  --bg: var(--color-bg);
+  --surface: var(--color-surface);
+  --line: var(--color-line);
+  --text: var(--color-ink);
+  --text-2: var(--color-ink-soft);
+  --muted: var(--color-muted);
+  --accent: var(--color-accent);
+  --on-accent: var(--color-on-accent);
+
+  --photo-empty: linear-gradient(160deg, #4a4637 0%, #2f3127 45%, #3e3329 100%);
+  --scrim: linear-gradient(
+    to bottom,
+    rgb(28 25 22 / 0) 0%,
+    rgb(28 25 22 / 0.86) 42%,
+    #1c1916 100%
+  );
+
+  --section-gap: 80px;
+}
+
+html {
+  background-color: var(--color-bg);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
