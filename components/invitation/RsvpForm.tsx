@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { submitRsvp } from "@/app/[slug]/actions";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
@@ -23,10 +23,19 @@ export function RsvpForm({ slug, defaultName, showMessage }: Props) {
   const [pax, setPax] = useState(1);
   const [messageLength, setMessageLength] = useState(0);
   const router = useRouter();
+  const announced = useRef(false);
 
   useEffect(() => {
-    if (state.status === "success") router.refresh();
-  }, [state.status, router]);
+    if (state.status !== "success" || announced.current) return;
+    announced.current = true;
+
+    if (state.submitted) {
+      window.dispatchEvent(
+        new CustomEvent("rsvp:submitted", { detail: state.submitted }),
+      );
+    }
+    router.refresh();
+  }, [state, router]);
 
   if (state.status === "success") {
     return (

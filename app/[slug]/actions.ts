@@ -2,50 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
-import { z } from "zod";
 import { clientIp, hashIp } from "@/lib/ip";
 import { sectionsSchema } from "@/lib/schema";
+import { MAX_RSVP_PER_HOUR, rsvpSchema } from "@/lib/schema/rsvp";
 import { initialRsvpState, type RsvpState } from "@/lib/rsvp";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
-
-const MAX_PER_HOUR = 5;
-
-const rsvpSchema = z
-  .object({
-    guestName: z
-      .string()
-      .trim()
-      .min(1, "Nama wajib diisi.")
-      .max(60, "Nama maksimal 60 karakter."),
-    attendance: z
-      .string()
-      .refine(
-        (value) => value === "hadir" || value === "tidak_hadir",
-        "Pilih kehadiran.",
-      ),
-    pax: z.coerce
-      .number()
-      .int("Jumlah orang harus berupa angka.")
-      .min(0, "Jumlah orang tidak valid.")
-      .max(5, "Maksimal 5 orang."),
-    message: z.string().trim().max(500, "Ucapan maksimal 500 karakter.").optional(),
-  })
-  .superRefine((value, ctx) => {
-    if (value.attendance === "hadir" && value.pax < 1) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["pax"],
-        message: "Jumlah orang minimal 1.",
-      });
-    }
-    if (value.attendance === "tidak_hadir" && value.pax !== 0) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["pax"],
-        message: "Jumlah orang harus 0 bila tidak hadir.",
-      });
-    }
-  });
 
 export async function submitRsvp(
   _previous: RsvpState,
@@ -128,7 +89,7 @@ export async function submitRsvp(
 
   if (countError) throw new Error(countError.message);
 
-  if ((count ?? 0) >= MAX_PER_HOUR) {
+  if ((count ?? 0) >= MAX_RSVP_PER_HOUR) {
     return {
       ...initialRsvpState,
       status: "error",
@@ -160,5 +121,11 @@ export async function submitRsvp(
     guestName: parsed.data.guestName,
     pax,
     attendance,
+    submitted: {
+      guestName: parsed.data.guestName,
+      attendance,
+      pax,
+      message,
+    },
   };
 }

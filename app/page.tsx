@@ -18,17 +18,20 @@ export default function HomePage() {
         >
           Lihat contoh undangan
         </Link>
-        <Link
-          href="/buat"
-          className="inline-flex h-12 items-center justify-center rounded-full border border-line px-7 text-sm font-medium text-muted transition-colors hover:border-accent/60 hover:text-ink focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-bg focus-visible:outline-none"
+        <button
+          type="button"
+          disabled
+          aria-disabled="true"
+          title="Wizard pembuatan undangan menyusul"
+          className="inline-flex h-12 cursor-not-allowed items-center justify-center rounded-full border border-line/60 px-7 text-sm font-medium text-muted/60"
         >
           Buat undangan
-        </Link>
+        </button>
       </div>
 
       <p className="mt-8 max-w-md text-note text-muted">
-        Versi demo. Pembuatan undangan lewat wizard menyusul, begitu juga galeri, RSVP,
-        dan amplop digital.
+        Tombol buat undangan aktif setelah wizard selesai dibangun. Sementara itu, contoh
+        undangan di atas sudah bisa dibuka seperti yang diterima tamu.
       </p>
     </main>
   );
