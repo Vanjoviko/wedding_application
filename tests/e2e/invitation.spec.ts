@@ -61,6 +61,27 @@ test.describe("halaman undangan tamu", () => {
     );
   });
 
+  test("metadata berbagi dan noindex tersedia", async ({ page, request }) => {
+    const response = await page.goto("/raka-sekar");
+    expect(response?.headers()["x-robots-tag"]).toContain("noindex");
+
+    await expect(page).toHaveTitle("Undangan Pernikahan Raka & Sekar");
+
+    const ogImage = await page.getAttribute('meta[property="og:image"]', "content");
+    expect(ogImage).toContain("/raka-sekar/og");
+
+    const image = await request.get("/raka-sekar/og");
+    expect(image.status()).toBe(200);
+    expect(image.headers()["content-type"]).toContain("image/jpeg");
+    expect((await image.body()).length).toBeGreaterThan(10_000);
+  });
+
+  test("landing tetap boleh diindeks", async ({ page }) => {
+    const response = await page.goto("/");
+    expect(response?.headers()["x-robots-tag"]).toBeUndefined();
+    await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
+  });
+
   test("slug yang tidak ada menghasilkan 404 berbahasa Indonesia", async ({ page }) => {
     const response = await page.goto("/undangan-tidak-ada");
     expect(response?.status()).toBe(404);
