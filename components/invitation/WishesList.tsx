@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SecondaryButton } from "@/components/ui/SecondaryButton";
 
 export type WishView = {
@@ -18,11 +18,49 @@ type Props = {
   initialHasMore: boolean;
 };
 
+type SubmittedDetail = {
+  guestName: string;
+  attendance: "hadir" | "tidak_hadir";
+  pax: number;
+  message: string | null;
+};
+
 export function WishesList({ slug, initial, initialHasMore }: Props) {
   const [items, setItems] = useState(initial);
   const [hasMore, setHasMore] = useState(initialHasMore);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Ucapan yang baru dikirim langsung muncul, tanpa menunggu refresh server.
+  useEffect(() => {
+    function onSubmitted(event: Event) {
+      const detail = (event as CustomEvent<SubmittedDetail>).detail;
+      if (!detail) return;
+
+      setItems((current) => {
+        const alreadyListed = current.some(
+          (item) =>
+            item.guestName === detail.guestName && item.message === detail.message,
+        );
+        if (alreadyListed) return current;
+
+        return [
+          {
+            id: `baru-${detail.guestName}-${Date.now()}`,
+            guestName: detail.guestName,
+            attendance: detail.attendance,
+            pax: detail.pax,
+            message: detail.message,
+            timeLabel: "baru saja",
+          },
+          ...current,
+        ];
+      });
+    }
+
+    window.addEventListener("rsvp:submitted", onSubmitted);
+    return () => window.removeEventListener("rsvp:submitted", onSubmitted);
+  }, []);
 
   async function loadMore() {
     setLoading(true);

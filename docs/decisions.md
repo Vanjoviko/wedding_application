@@ -4,6 +4,8 @@ Keputusan yang diambil di luar `docs/PRD.md` dicatat di sini, terbaru di atas. F
 
 | Tanggal | Keputusan | Alasan | Milestone |
 | --- | --- | --- | --- |
+| 2026-10-29 | Ucapan yang baru dikirim langsung ditambahkan di klien lewat event `rsvp:submitted`, lalu `router.refresh()` dijalankan | Refresh server saja tidak memperbarui `useState` di daftar ucapan, sehingga kiriman baru tidak terlihat sampai halaman dimuat ulang | M4 |
+| 2026-10-29 | Tes e2e yang menulis data hanya berjalan bila `SUPABASE_URL` menunjuk localhost, dan membersihkan baris dengan `ip_hash` terisi | Menghindari polusi data demo di produksi dan membuat batas 5 kiriman per jam bisa diuji berulang | M4 |
 | 2026-10-29 | `cacheComponents` dan `partialPrefetching` dimatikan; `/[slug]` memakai `dynamic = "force-dynamic"` | Partial Prerender mengirim status 200 sebelum `notFound()` selesai, sehingga link yang tidak ada tidak menghasilkan 404 | M3 |
 | 2026-10-29 | Tes e2e berjalan dengan 1 worker dan timeout 60 detik | Route undangan dirender dinamis; beberapa worker sekaligus membuat kompilasi dev bertumpuk dan tes flaky | M3 |
 | 2026-10-29 | Font dipindah dari `next/font/google` ke `next/font/local` dengan berkas woff2 di `app/fonts/` | Build Vercel gagal di Turbopack: `next/font/google queries have exactly one entry` dan tidak bisa me-resolve font internal Vercel. Self-host juga menghapus ketergantungan jaringan saat build | M3 |

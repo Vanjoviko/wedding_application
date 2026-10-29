@@ -1,3 +1,10 @@
+export type SubmittedWish = {
+  guestName: string;
+  attendance: "hadir" | "tidak_hadir";
+  pax: number;
+  message: string | null;
+};
+
 export type RsvpState = {
   status: "idle" | "success" | "error";
   errors: Record<string, string>;
@@ -5,6 +12,7 @@ export type RsvpState = {
   guestName?: string;
   pax?: number;
   attendance?: "hadir" | "tidak_hadir";
+  submitted?: SubmittedWish;
 };
 
 export const initialRsvpState: RsvpState = {
