@@ -62,7 +62,7 @@ export function Cover({
           Mohon maaf bila ada kesalahan penulisan nama dan gelar.
         </p>
 
-        <PrimaryButton icon={<MailIcon size={18} />} className="mt-[22px]">
+        <PrimaryButton icon={<MailIcon size={18} />} className="mt-[22px]" openInvitation>
           Buka undangan
         </PrimaryButton>
       </div>

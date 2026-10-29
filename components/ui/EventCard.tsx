@@ -1,5 +1,6 @@
 import { MapPinIcon } from "@/components/icons";
 import { SecondaryButton } from "@/components/ui/SecondaryButton";
+import { formatTimeRange } from "@/lib/datetime";
 
 export type EventView = {
   name: string;
@@ -11,11 +12,6 @@ export type EventView = {
   address: string;
   mapsUrl?: string;
 };
-
-export function formatTimeRange(event: EventView) {
-  const range = event.end ? `${event.start} sampai ${event.end}` : event.start;
-  return `${range} ${event.tz}`;
-}
 
 export function EventCard({ event }: { event: EventView }) {
   return (
