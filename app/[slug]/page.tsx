@@ -71,10 +71,35 @@ export async function generateMetadata({
     return { title: "Undangan tidak tersedia", robots };
   }
 
+  const title = pageTitle(event.content);
+  const description = `Undangan ${coupleNames(event.content)} — ${brandName}`;
+
   return {
-    title: pageTitle(event.content),
-    description: `Undangan ${coupleNames(event.content)} — ${brandName}`,
+    // Judul berbagi mengikuti PRD, tanpa akhiran nama brand.
+    title: { absolute: title },
+    description,
     robots,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      locale: "id_ID",
+      siteName: brandName,
+      images: [
+        {
+          url: `/${slug}/og`,
+          width: 1200,
+          height: 630,
+          alt: `Undangan ${coupleNames(event.content)}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`/${slug}/og`],
+    },
   };
 }
 

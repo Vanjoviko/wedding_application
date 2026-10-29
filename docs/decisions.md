@@ -4,6 +4,9 @@ Keputusan yang diambil di luar `docs/PRD.md` dicatat di sini, terbaru di atas. F
 
 | Tanggal | Keputusan | Alasan | Milestone |
 | --- | --- | --- | --- |
+| 2026-10-29 | Gambar pratinjau tautan dibuat lewat route `/[slug]/og` (bukan konvensi `opengraph-image`), lalu dikonversi ke JPEG dengan `sharp` | Satori tidak menerima WebP dan PNG hasil render berukuran ±1,8 MB; JPEG 1200×630 jadi ±77 KB sehingga ringan untuk WhatsApp | M5 |
+| 2026-10-29 | Foto WebP diubah ke JPEG di dalam route OG sebelum dirender | Foto unggahan pengguna juga WebP, jadi jalur ini dipakai ulang di M6 | M5 |
+| 2026-10-29 | Judul halaman undangan memakai `title.absolute` agar tidak ditambah akhiran nama brand | PRD menetapkan judul "Undangan Pernikahan Raka & Sekar" saat link dibagikan | M5 |
 | 2026-10-29 | Ucapan yang baru dikirim langsung ditambahkan di klien lewat event `rsvp:submitted`, lalu `router.refresh()` dijalankan | Refresh server saja tidak memperbarui `useState` di daftar ucapan, sehingga kiriman baru tidak terlihat sampai halaman dimuat ulang | M4 |
 | 2026-10-29 | Tes e2e yang menulis data hanya berjalan bila `SUPABASE_URL` menunjuk localhost, dan membersihkan baris dengan `ip_hash` terisi | Menghindari polusi data demo di produksi dan membuat batas 5 kiriman per jam bisa diuji berulang | M4 |
 | 2026-10-29 | `cacheComponents` dan `partialPrefetching` dimatikan; `/[slug]` memakai `dynamic = "force-dynamic"` | Partial Prerender mengirim status 200 sebelum `notFound()` selesai, sehingga link yang tidak ada tidak menghasilkan 404 | M3 |
