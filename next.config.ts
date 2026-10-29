@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  /* Undangan bergantung pada database per request; Partial Prerender
+     membuat notFound() terkirim setelah status 200, sehingga 404 jadi 200.
+     Karena itu cacheComponents dimatikan. */
   turbopack: {
     rules: {
       "*.css": {

@@ -24,7 +24,8 @@ import { Rsvp } from "@/themes/modern/Rsvp";
 import { Ucapan } from "@/themes/modern/Ucapan";
 
 // Undangan bergantung pada database dan slug, jadi dirender saat diminta.
-export const instant = false;
+// force-dynamic menjaga status 404 tetap 404 (bukan 200 dari shell PPR).
+export const dynamic = "force-dynamic";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
