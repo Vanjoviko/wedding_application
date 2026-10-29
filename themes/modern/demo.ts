@@ -60,6 +60,7 @@ export const demoCountdown = {
   hours: 8,
   minutes: 45,
   seconds: 12,
+  finished: false,
 };
 
 export const demoCover = {

@@ -4,6 +4,16 @@ Keputusan yang diambil di luar `docs/PRD.md` dicatat di sini, terbaru di atas. F
 
 | Tanggal | Keputusan | Alasan | Milestone |
 | --- | --- | --- | --- |
+| 2026-10-29 | Halaman `/[slug]` dirender dinamis dengan `export const instant = false` | Undangan bergantung pada database dan parameter `?to=`; cacheComponents Next 16 menolak prerender data runtime tanpa Suspense | M3 |
+| 2026-10-29 | Countdown dihitung di klien per detik, nilai awal dikirim dari server | Menghindari kedipan dan hydration mismatch, tetap akurat setelah halaman lama terbuka | M3 |
+| 2026-10-29 | Offset zona waktu tetap WIB +7, WITA +8, WIT +9; `.ics` memakai `TZID` `Asia/Jakarta`, `Asia/Makassar`, `Asia/Jayapura` | Indonesia tidak memakai DST | M3 |
+| 2026-10-29 | Acara tanpa jam selesai memakai durasi 2 jam di `.ics` | Kalender butuh `DTEND`; dua jam adalah perkiraan yang wajar | M3 |
+| 2026-10-29 | Rate limit RSVP 5 kiriman per IP per undangan per jam, IP disimpan sebagai hash SHA-256 dengan `IP_HASH_SALT` | Sesuai PRD; hash menjaga privasi tamu | M3 |
+| 2026-10-29 | Honeypot `website` yang terisi dijawab sukses tanpa menyimpan data | Bot tidak belajar bahwa kirimannya ditolak | M3 |
+| 2026-10-29 | Nama tamu dari `?to=` dipangkas 60 karakter dan dirender sebagai teks biasa; tanpa `to` memakai "Bapak/Ibu/Saudara/i" | Sesuai PRD, mencegah HTML injection | M3 |
+| 2026-10-29 | `X-Robots-Tag: noindex, nofollow` dan `Referrer-Policy: no-referrer` dikirim lewat `headers()` untuk `/:slug` | Meta saja tidak cukup; header juga melindungi token edit dari kebocoran referrer | M3 |
+| 2026-10-29 | Musik demo `public/music/track-01.mp3` disintesis sendiri (pad lembut 32 detik) | Lagu royalty-free belum tersedia; aset sintetis tidak melanggar lisensi pihak ketiga | M3 |
+| 2026-10-29 | Lightbox galeri memakai scroll-snap horizontal, bukan library | Menjaga anggaran JavaScript halaman undangan | M3 |
 | 2026-10-28 | `events.slug` nullable, unique index parsial `where slug is not null`, plus constraint `status = 'draft' or slug is not null` | Banyak draf bisa hidup tanpa slug; undangan terbit wajib punya slug | M2 |
 | 2026-10-28 | Kolom `type`, `theme`, `plan`, `status`, `kind`, `attendance` memakai `text` + `CHECK`, bukan tipe enum Postgres | Menambah nilai baru cukup ubah constraint, tidak perlu migrasi tipe | M2 |
 | 2026-10-28 | `updated_at` diurus trigger `public.touch_updated_at()` | Satu sumber kebenaran, tidak bergantung pada setiap kode tulis | M2 |

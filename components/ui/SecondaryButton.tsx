@@ -9,6 +9,7 @@ type Props = {
   type?: "button" | "submit";
   disabled?: boolean;
   fullWidth?: boolean;
+  onClick?: () => void;
   className?: string;
 };
 
@@ -26,6 +27,7 @@ export function SecondaryButton({
   type = "button",
   disabled,
   fullWidth,
+  onClick,
   className,
 }: Props) {
   const classes = cx(base, fullWidth && "w-full", className);
@@ -45,7 +47,7 @@ export function SecondaryButton({
   }
 
   return (
-    <button type={type} disabled={disabled} className={classes}>
+    <button type={type} disabled={disabled} className={classes} onClick={onClick}>
       {content}
     </button>
   );

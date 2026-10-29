@@ -9,7 +9,10 @@ type Props = {
   type?: "button" | "submit";
   disabled?: boolean;
   fullWidth?: boolean;
+  onClick?: () => void;
   className?: string;
+  /** Penanda untuk tombol yang membuka undangan, dibaca lewat event delegation. */
+  openInvitation?: boolean;
 };
 
 const base =
@@ -26,7 +29,9 @@ export function PrimaryButton({
   type = "button",
   disabled,
   fullWidth,
+  onClick,
   className,
+  openInvitation,
 }: Props) {
   const classes = cx(base, fullWidth && "w-full", className);
   const content = (
@@ -38,14 +43,20 @@ export function PrimaryButton({
 
   if (href && !disabled) {
     return (
-      <Link href={href} className={classes}>
+      <Link href={href} className={classes} data-open-invitation={openInvitation}>
         {content}
       </Link>
     );
   }
 
   return (
-    <button type={type} disabled={disabled} className={classes}>
+    <button
+      type={type}
+      disabled={disabled}
+      className={classes}
+      onClick={onClick}
+      data-open-invitation={openInvitation}
+    >
       {content}
     </button>
   );

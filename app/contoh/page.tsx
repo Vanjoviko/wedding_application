@@ -41,7 +41,7 @@ export default function ContohPage() {
       <Acara
         dateLabel={demoCover.dateLabel}
         events={demoEvents}
-        countdown={demoCountdown}
+        initialCountdown={demoCountdown}
       />
 
       <footer className="px-6 pb-16 text-center">

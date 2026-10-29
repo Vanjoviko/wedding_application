@@ -2,7 +2,7 @@
 
 Web undangan digital self-service. Pembuat mengisi wizard, lalu membagikan link personal ke tiap tamu lewat WhatsApp. Demo v1 fokus ke undangan pernikahan bertema Modern; sweet seventeen menyusul.
 
-Kode aplikasi dibangun oleh AI coding agent, milestone demi milestone. Status terakhir: **M2 (model data dan data demo) selesai** — empat tabel, bucket `media`, skema Zod, dan seed `raka-sekar` sudah jalan di Supabase lokal. Tampilan undangan tamu menyusul di M3.
+Kode aplikasi dibangun oleh AI coding agent, milestone demi milestone. Status terakhir: **M3 (halaman undangan untuk tamu) selesai** — `/raka-sekar` menampilkan 10 section lengkap dengan gate, countdown berjalan, galeri, RSVP, ucapan, amplop, dan musik.
 
 ## Isi repo
 
