@@ -1,8 +1,23 @@
+import { existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { defineConfig, devices } from "@playwright/test";
-import { loadEnvConfig } from "@next/env";
 
-// Memuat .env.local supaya tes e2e bisa memakai database yang sama dengan dev.
-loadEnvConfig(process.cwd());
+// Memuat .env.local tanpa menambah dependency, supaya tes e2e memakai
+// database yang sama dengan `pnpm dev`.
+function loadLocalEnv() {
+  const file = resolve(process.cwd(), ".env.local");
+  if (!existsSync(file)) return;
+
+  for (const line of readFileSync(file, "utf8").split("\n")) {
+    const match = line.match(/^\s*([A-Za-z0-9_]+)\s*=\s*(.*)$/);
+    if (!match) continue;
+    const key = match[1]!;
+    const value = match[2]!.replace(/^["']|["']$/g, "");
+    if (process.env[key] === undefined) process.env[key] = value;
+  }
+}
+
+loadLocalEnv();
 
 const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
 
