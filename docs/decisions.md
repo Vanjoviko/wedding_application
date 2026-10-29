@@ -4,6 +4,7 @@ Keputusan yang diambil di luar `docs/PRD.md` dicatat di sini, terbaru di atas. F
 
 | Tanggal | Keputusan | Alasan | Milestone |
 | --- | --- | --- | --- |
+| 2026-10-29 | Font dipindah dari `next/font/google` ke `next/font/local` dengan berkas woff2 di `app/fonts/` | Build Vercel gagal di Turbopack: `next/font/google queries have exactly one entry` dan tidak bisa me-resolve font internal Vercel. Self-host juga menghapus ketergantungan jaringan saat build | M3 |
 | 2026-10-29 | Halaman `/[slug]` dirender dinamis dengan `export const instant = false` | Undangan bergantung pada database dan parameter `?to=`; cacheComponents Next 16 menolak prerender data runtime tanpa Suspense | M3 |
 | 2026-10-29 | Countdown dihitung di klien per detik, nilai awal dikirim dari server | Menghindari kedipan dan hydration mismatch, tetap akurat setelah halaman lama terbuka | M3 |
 | 2026-10-29 | Offset zona waktu tetap WIB +7, WITA +8, WIT +9; `.ics` memakai `TZID` `Asia/Jakarta`, `Asia/Makassar`, `Asia/Jayapura` | Indonesia tidak memakai DST | M3 |

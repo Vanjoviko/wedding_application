@@ -1,21 +1,37 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Jost } from "next/font/google";
+import localFont from "next/font/local";
 import { brandName, siteUrl } from "@/lib/site";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
+// Font di-host sendiri supaya build tidak bergantung pada fonts.googleapis.com.
+// Lisensi Cormorant Garamond dan Jost: SIL Open Font License 1.1.
+const cormorant = localFont({
   variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["500"],
-  style: ["normal", "italic"],
   display: "swap",
+  src: [
+    {
+      path: "./fonts/cormorant-garamond-500.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "./fonts/cormorant-garamond-500-italic.woff2",
+      weight: "500",
+      style: "italic",
+    },
+  ],
 });
 
-const jost = Jost({
+const jost = localFont({
   variable: "--font-jost",
-  subsets: ["latin"],
-  weight: ["400", "500"],
   display: "swap",
+  src: [
+    {
+      path: "./fonts/jost-400-500.woff2",
+      weight: "400 500",
+      style: "normal",
+    },
+  ],
 });
 
 export const metadata: Metadata = {
