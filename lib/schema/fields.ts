@@ -48,7 +48,9 @@ export const instagramField = z
     /^@?[A-Za-z0-9._]*$/,
     "Nama pengguna Instagram hanya boleh huruf, angka, titik, dan garis bawah.",
   )
+  .optional()
   .transform((value) => {
+    if (!value) return undefined;
     const withoutAt = value.replace(/^@/, "");
     return withoutAt.length > 0 ? withoutAt : undefined;
   });

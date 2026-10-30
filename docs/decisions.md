@@ -4,6 +4,14 @@ Keputusan yang diambil di luar `docs/PRD.md` dicatat di sini, terbaru di atas. F
 
 | Tanggal | Keputusan | Alasan | Milestone |
 | --- | --- | --- | --- |
+| 2026-10-31 | Draf disimpan sebagai `content` JSON parsial; validasi skema penuh baru dilakukan saat publikasi lewat langkah normalisasi | Wizard perlu menyimpan isian setengah jadi tanpa ditolak skema | M6 |
+| 2026-10-31 | Simpan otomatis 2 detik setelah berhenti mengetik, dan tombol Publikasikan memaksa simpan sekali lagi sebelum validasi | Menghindari perubahan 2 detik terakhir hilang saat terbit | M6 |
+| 2026-10-31 | Foto dikompres di browser ke WebP maksimal 1600px, diunggah lewat signed upload URL, lalu didaftarkan lewat server action | Sesuai PRD; kunci storage tidak pernah dikirim ke browser | M6 |
+| 2026-10-31 | `next/image` mengizinkan `*.supabase.co`; di pengembangan lokal `dangerouslyAllowLocalIP` dinyalakan untuk 127.0.0.1 | Foto unggahan berasal dari Storage, bukan aset statis | M6 |
+| 2026-10-31 | Masa aktif dihitung dari tanggal acara terakhir + 7 hari (gratis) atau 90 hari (premium) saat publikasi | PRD § Paket | M6 |
+| 2026-10-31 | Field orang tua dan urutan anak ikut wajib di skema, meski PRD hanya menyebut nama sebagai kolom wajib | Tanpa data itu kalimat "Putra pertama dari ..." akan rusak di halaman tamu | M6 |
+| 2026-10-31 | Tiga lagu bawaan disintesis sendiri (`track-01`..`03`) | Lagu royalty-free dari pemilik produk belum tersedia | M6 |
+| 2026-10-31 | `/buat` dan `/edit/*` mengirim `noindex` + `Referrer-Policy: no-referrer` | Token edit ada di URL dan tidak boleh bocor lewat referrer | M6 |
 | 2026-10-29 | Gambar pratinjau tautan dibuat lewat route `/[slug]/og` (bukan konvensi `opengraph-image`), lalu dikonversi ke JPEG dengan `sharp` | Satori tidak menerima WebP dan PNG hasil render berukuran ±1,8 MB; JPEG 1200×630 jadi ±77 KB sehingga ringan untuk WhatsApp | M5 |
 | 2026-10-29 | Foto WebP diubah ke JPEG di dalam route OG sebelum dirender | Foto unggahan pengguna juga WebP, jadi jalur ini dipakai ulang di M6 | M5 |
 | 2026-10-29 | Judul halaman undangan memakai `title.absolute` agar tidak ditambah akhiran nama brand | PRD menetapkan judul "Undangan Pernikahan Raka & Sekar" saat link dibagikan | M5 |
