@@ -18,15 +18,12 @@ export default function HomePage() {
         >
           Lihat contoh undangan
         </Link>
-        <button
-          type="button"
-          disabled
-          aria-disabled="true"
-          title="Wizard pembuatan undangan menyusul"
-          className="inline-flex h-12 cursor-not-allowed items-center justify-center rounded-full border border-line/60 px-7 text-sm font-medium text-muted/60"
+        <Link
+          href="/buat"
+          className="inline-flex h-12 items-center justify-center rounded-full border border-accent/60 px-7 text-sm font-medium text-accent transition-colors hover:border-accent hover:text-accent-hover focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-bg focus-visible:outline-none"
         >
           Buat undangan
-        </button>
+        </Link>
       </div>
 
       <p className="mt-8 max-w-md text-note text-muted">
