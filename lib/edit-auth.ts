@@ -11,6 +11,7 @@ export type EditableEvent = {
   content: unknown;
   sections: unknown;
   musicTrack: string | null;
+  guestMessageTemplate: string | null;
 };
 
 /**
@@ -23,7 +24,9 @@ export async function getEventByEditToken(token: string): Promise<EditableEvent 
   const supabase = getSupabaseAdmin();
   const { data, error } = await supabase
     .from("events")
-    .select("id, type, status, plan, slug, content, sections, music_track")
+    .select(
+      "id, type, status, plan, slug, content, sections, music_track, guest_message_template",
+    )
     .eq("edit_token_hash", hashEditToken(token))
     .maybeSingle();
 
@@ -39,5 +42,6 @@ export async function getEventByEditToken(token: string): Promise<EditableEvent 
     content: data.content,
     sections: data.sections,
     musicTrack: data.music_track,
+    guestMessageTemplate: data.guest_message_template,
   };
 }

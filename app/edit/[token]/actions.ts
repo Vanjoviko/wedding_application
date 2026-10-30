@@ -4,6 +4,7 @@ import { randomUUID } from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { getEventByEditToken } from "@/lib/edit-auth";
+import { parseGuestNames } from "@/lib/guests";
 import {
   MAX_DRAFT_BYTES,
   isDraftContent,
@@ -461,5 +462,82 @@ export async function deleteMedia(token: string, mediaId: string): Promise<SaveR
   if (deleteError) return { ok: false, message: deleteError.message };
 
   revalidatePath(`/edit/${token}`);
+  return { ok: true };
+}
+
+/* ------------------------------ tamu ------------------------------ */
+
+export type GuestsResult = { ok: true; count: number } | { ok: false; message: string };
+
+export async function saveGuests(token: string, rawNames: string): Promise<GuestsResult> {
+  const event = await getEventByEditToken(token);
+  if (!event) return { ok: false, message: "Alamat edit tidak dikenal." };
+
+  const names = parseGuestNames(rawNames);
+  if (names.length === 0) {
+    return { ok: false, message: "Isi minimal satu nama tamu." };
+  }
+
+  const supabase = getSupabaseAdmin();
+
+  const { error: deleteError } = await supabase
+    .from("guests")
+    .delete()
+    .eq("event_id", event.id);
+
+  if (deleteError) return { ok: false, message: deleteError.message };
+
+  const { error: insertError } = await supabase
+    .from("guests")
+    .insert(names.map((name) => ({ event_id: event.id, name })));
+
+  if (insertError) return { ok: false, message: insertError.message };
+
+  revalidatePath(`/edit/${token}`);
+  return { ok: true, count: names.length };
+}
+
+export async function saveGuestTemplate(
+  token: string,
+  template: string,
+): Promise<SaveResult> {
+  const event = await getEventByEditToken(token);
+  if (!event) return { ok: false, message: "Alamat edit tidak dikenal." };
+
+  const trimmed = template.slice(0, 1200);
+  const supabase = getSupabaseAdmin();
+  const { error } = await supabase
+    .from("events")
+    .update({ guest_message_template: trimmed.trim() ? trimmed : null })
+    .eq("id", event.id);
+
+  if (error) return { ok: false, message: error.message };
+
+  revalidatePath(`/edit/${token}`);
+  return { ok: true };
+}
+
+/* --------------------------- hapus undangan --------------------------- */
+
+export async function deleteEventPermanently(token: string): Promise<SaveResult> {
+  const event = await getEventByEditToken(token);
+  if (!event) return { ok: false, message: "Alamat edit tidak dikenal." };
+
+  const supabase = getSupabaseAdmin();
+
+  const { data: mediaRows } = await supabase
+    .from("media")
+    .select("storage_path")
+    .eq("event_id", event.id);
+
+  const paths = (mediaRows ?? []).map((row) => row.storage_path);
+  if (paths.length > 0) {
+    await supabase.storage.from("media").remove(paths);
+  }
+
+  const { error } = await supabase.from("events").delete().eq("id", event.id);
+  if (error) return { ok: false, message: error.message };
+
+  revalidatePath("/");
   return { ok: true };
 }

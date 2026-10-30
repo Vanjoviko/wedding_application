@@ -4,6 +4,12 @@ Keputusan yang diambil di luar `docs/PRD.md` dicatat di sini, terbaru di atas. F
 
 | Tanggal | Keputusan | Alasan | Milestone |
 | --- | --- | --- | --- |
+| 2026-10-31 | Template pesan tamu disimpan di kolom baru `events.guest_message_template` | Template bisa diedit dan dipakai ulang tanpa menyimpan 500 pesan jadi | M7 |
+| 2026-10-31 | Daftar tamu disimpan dengan cara mengganti seluruh daftar (hapus lalu isi ulang), duplikat tanpa beda kapital dibuang, maksimal 500 | Paling sederhana dan sesuai alur tempel-sekali di PRD | M7 |
+| 2026-10-31 | Tab Tamu dan Respons memakai query `?tab=` pada halaman edit yang sama | Satu token, satu halaman, tanpa duplikasi layout | M7 |
+| 2026-10-31 | CSV dibuat di browser dengan BOM UTF-8 | Bisa langsung dibuka di Excel tanpa karakter rusak | M7 |
+| 2026-10-31 | Hapus undangan meminta pengguna mengetik "HAPUS", lalu menghapus objek Storage dan baris event (cascade) | Mencegah penghapusan karena salah klik | M7 |
+| 2026-10-31 | Ringkasan respons dihitung dari maksimal 1000 respons terbaru | Cukup untuk demo; agregasi SQL bisa ditambahkan bila data membesar | M7 |
 | 2026-10-31 | Draf disimpan sebagai `content` JSON parsial; validasi skema penuh baru dilakukan saat publikasi lewat langkah normalisasi | Wizard perlu menyimpan isian setengah jadi tanpa ditolak skema | M6 |
 | 2026-10-31 | Simpan otomatis 2 detik setelah berhenti mengetik, dan tombol Publikasikan memaksa simpan sekali lagi sebelum validasi | Menghindari perubahan 2 detik terakhir hilang saat terbit | M6 |
 | 2026-10-31 | Foto dikompres di browser ke WebP maksimal 1600px, diunggah lewat signed upload URL, lalu didaftarkan lewat server action | Sesuai PRD; kunci storage tidak pernah dikirim ke browser | M6 |
